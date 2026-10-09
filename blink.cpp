@@ -60,8 +60,8 @@ int main() {
       sample_count++;
       next_sample = delayed_by_ms(next_sample, 50);
     }
-  }
-  for (int i = 0; i < sample_cap; i++) {
-    printf("%llu,%d\n", (unsigned long long)sample_times[i], samples[i]);
+    for (int i = 0; i < sample_cap; i++) {
+      printf("%llu,%d\n", (unsigned long long)sample_times[i], samples[i]);
+    }
   }
 }
