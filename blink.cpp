@@ -2,6 +2,8 @@
 #include <cstdint>
 #include <hardware/gpio.h>
 #include <hardware/timer.h>
+#include <pico/time.h>
+#include <pico/types.h>
 #include <stdio.h>
 
 int main() {
@@ -31,6 +33,8 @@ int main() {
   int i = 0;
   int sample_count = 0;
   uint64_t start_time = time_us_64();
+
+  absolute_time_t next_sample = get_absolute_time();
 
   while (sample_count < sample_cap) {
 
