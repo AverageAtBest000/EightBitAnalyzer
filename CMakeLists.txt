@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
 
+# Let clangd use the same Pico SDK headers, defines, and target as the build.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 include(pico_sdk_import.cmake)
 project(logic_analyzer C CXX ASM)
 pico_sdk_init()
