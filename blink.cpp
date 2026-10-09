@@ -26,8 +26,6 @@ int main() {
   gpio_set_dir(READ_PIN, GPIO_IN);
   gpio_set_dir(TEST_PIN, GPIO_OUT);
 
-  gpio_put(TEST_PIN, false);
-
   gpio_pull_down(READ_PIN);
   while (true) {
 
@@ -40,6 +38,7 @@ int main() {
     int sample_count = 0;
     uint64_t start_time = time_us_64();
 
+    gpio_put(TEST_PIN, false);
     absolute_time_t next_sample = get_absolute_time();
 
     while (sample_count < sample_cap) {
