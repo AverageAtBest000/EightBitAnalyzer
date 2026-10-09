@@ -5,6 +5,7 @@
 #include <pico/time.h>
 #include <pico/types.h>
 #include <stdio.h>
+#include <sys/_intsup.h>
 
 int main() {
   const int sample_cap = 100;
@@ -28,33 +29,38 @@ int main() {
   gpio_put(TEST_PIN, false);
 
   gpio_pull_down(READ_PIN);
+  while (true) {
 
-  bool test_state = false;
-  int i = 0;
-  int sample_count = 0;
-  uint64_t start_time = time_us_64();
+    char ch = getchar();
+    if (ch != 'g')
+      continue;
 
-  absolute_time_t next_sample = get_absolute_time();
+    bool test_state = false;
+    int i = 0;
+    int sample_count = 0;
+    uint64_t start_time = time_us_64();
 
-  while (sample_count < sample_cap) {
+    absolute_time_t next_sample = get_absolute_time();
 
-    sample_times[sample_count] = time_us_64() - start_time;
-    int read_pin_state = gpio_get(READ_PIN);
-    gpio_put(LED_PIN, read_pin_state);
+    while (sample_count < sample_cap) {
+      sleep_until(next_sample);
+      sample_times[sample_count] = time_us_64() - start_time;
+      int read_pin_state = gpio_get(READ_PIN);
+      gpio_put(LED_PIN, read_pin_state);
 
-    if (i == 10) {
-      i = 0;
-      test_state = !test_state;
-      gpio_put(TEST_PIN, test_state);
+      if (i == 10) {
+        i = 0;
+        test_state = !test_state;
+        gpio_put(TEST_PIN, test_state);
+      }
+      i++;
+
+      samples[sample_count] = read_pin_state;
+
+      sample_count++;
+      next_sample = delayed_by_ms(next_sample, 50);
     }
-    i++;
-
-    samples[sample_count] = read_pin_state;
-
-    sample_count++;
-    sleep_ms(50);
   }
-
   for (int i = 0; i < sample_cap; i++) {
     printf("%llu,%d\n", (unsigned long long)sample_times[i], samples[i]);
   }
