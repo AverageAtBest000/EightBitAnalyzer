@@ -1,4 +1,5 @@
 #include "pico/stdlib.h"
+#include <cstdint>
 #include <hardware/gpio.h>
 #include <hardware/timer.h>
 #include <stdio.h>
@@ -6,7 +7,7 @@
 int main() {
   const int sample_cap = 100;
   int samples[sample_cap];
-  long sample_times[sample_cap];
+  uint64_t sample_times[sample_cap];
 
   stdio_init_all();
 
@@ -29,10 +30,11 @@ int main() {
   bool test_state = false;
   int i = 0;
   int sample_count = 0;
-  long start_time = time_us_64();
+  uint64_t start_time = time_us_64();
 
   while (sample_count < sample_cap) {
 
+    sample_times[sample_count] = time_us_64() - start_time;
     int read_pin_state = gpio_get(READ_PIN);
     gpio_put(LED_PIN, read_pin_state);
 
@@ -44,18 +46,12 @@ int main() {
     i++;
 
     samples[sample_count] = read_pin_state;
-    sample_times[sample_count] = time_us_64() - start_time;
 
     sample_count++;
     sleep_ms(50);
   }
 
-  printf("[ ");
   for (int i = 0; i < sample_cap; i++) {
-    printf("%d ", samples[i]);
     printf("%llu,%d\n", (unsigned long long)sample_times[i], samples[i]);
-    if (i != sample_cap - 1)
-      printf(",");
   }
-  printf(" ]\n");
 }
