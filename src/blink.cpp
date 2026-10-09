@@ -1,4 +1,5 @@
 #include "pico/stdlib.h"
+#include "writer.h"
 #include <cstdint>
 #include <hardware/gpio.h>
 #include <hardware/timer.h>
@@ -27,6 +28,7 @@ int main() {
   gpio_set_dir(TEST_PIN, GPIO_OUT);
 
   gpio_pull_down(READ_PIN);
+
   while (true) {
 
     int ch = getchar();
