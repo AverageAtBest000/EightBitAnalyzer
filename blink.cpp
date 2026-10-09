@@ -29,7 +29,7 @@ int main() {
   gpio_pull_down(READ_PIN);
   while (true) {
 
-    char ch = getchar();
+    int ch = getchar();
     if (ch != 'g')
       continue;
 
