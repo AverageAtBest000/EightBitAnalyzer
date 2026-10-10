@@ -17,9 +17,9 @@ int make_file(std::ofstream &file, std::string file_name) {
 void close_file(std::ofstream &file) { file.close(); }
 
 /*
- * @brief writes line to file - appends newline at the end
- */
+ * @brief writes line to file
+ * */
 void write_to_file(std::ofstream &file, const std::string &line) {
 
-  file << line << "\n";
+  file << line;
 }

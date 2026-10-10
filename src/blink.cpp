@@ -1,6 +1,9 @@
 #include "pico/stdlib.h"
+#include "reader.h"
 #include "writer.h"
+#include <cstddef>
 #include <cstdint>
+#include <fstream>
 #include <hardware/gpio.h>
 #include <hardware/timer.h>
 #include <pico/time.h>
@@ -35,6 +38,16 @@ int main() {
     if (ch != 'g')
       continue;
 
+    std::ofstream cvs = NULL;
+
+    make_file(cvs, "output");
+
+    int fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY);
+
+    terminos old_attr;
+    terminos new_attr;
+    set_raw_terminal(&old_attr, &new_attr, fd);
+
     bool test_state = false;
     int i = 0;
     int sample_count = 0;
@@ -60,8 +73,7 @@ int main() {
 
       sample_count++;
       next_sample = delayed_by_ms(next_sample, 50);
-    }
-    for (int i = 0; i < sample_cap; i++) {
+
       printf("%llu,%d\n", (unsigned long long)sample_times[i], samples[i]);
     }
   }
