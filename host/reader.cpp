@@ -39,7 +39,7 @@ int read_pico_stream_to_file(int fd, std::ofstream &file) {
 }
 
 /*
- * @brief disables ICANON and ECHO while initialitzing old_attr and new_attr-
+ * @brief calls cfmakeraw(). Makes VMIN 1 and VTIME 0
  * @return 0 if succesful, -1 otherwise
  */
 int set_raw_terminal(struct termios *old_attr, struct termios *new_attr,
@@ -50,14 +50,15 @@ int set_raw_terminal(struct termios *old_attr, struct termios *new_attr,
   }
 
   *new_attr = *old_attr;
-  new_attr->c_lflag &= ~ICANON;
 
-  new_attr->c_lflag &= ~ECHO;
+  cfmakeraw(new_attr);
+
+  new_attr->c_cc[VMIN] = 1;
+  new_attr->c_cc[VTIME] = 0;
 
   if (tcsetattr(fd, TCSANOW, new_attr) != 0) {
     return -1;
   }
-
   return 0;
 }
 
