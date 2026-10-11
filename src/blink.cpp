@@ -1,6 +1,5 @@
 #include "pico/stdlib.h"
-#include "reader.h"
-#include "writer.h"
+#include "shared.h"
 #include <cstdint>
 #include <hardware/gpio.h>
 #include <hardware/timer.h>
@@ -10,7 +9,7 @@
 #include <sys/_intsup.h>
 
 int main() {
-  const int sample_cap = 100;
+  const int sample_cap = num_samples;
   int samples[sample_cap];
   uint64_t sample_times[sample_cap];
 

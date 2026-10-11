@@ -9,6 +9,7 @@ pico_sdk_init()
 
 add_executable(logic_analyzer src/blink.cpp)
 target_link_libraries(logic_analyzer pico_stdlib)
+target_include_directories( logic_analyzer PRIVATE include)
 
 pico_enable_stdio_usb(logic_analyzer 1)
 pico_enable_stdio_uart(logic_analyzer 0)
