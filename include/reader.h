@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <fstream>
 #include <termios.h>
 
 int read_pico_stream_to_file(int fd, std::ofstream &file);
