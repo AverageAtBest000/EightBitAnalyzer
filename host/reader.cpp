@@ -53,6 +53,7 @@ int set_raw_terminal(struct termios *old_attr, struct termios *new_attr,
 
   cfmakeraw(new_attr);
 
+  // wait for 1 byte at a minimun
   new_attr->c_cc[VMIN] = 1;
   new_attr->c_cc[VTIME] = 0;
 
