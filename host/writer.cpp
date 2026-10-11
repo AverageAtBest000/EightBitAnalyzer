@@ -10,6 +10,8 @@ int make_file(std::ofstream &file, std::string file_name) {
 
   if (!file.is_open())
     return -1;
+
+  return 0;
 }
 
 /* @brief closes file
