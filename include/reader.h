@@ -3,7 +3,7 @@
 #include <string>
 #include <termios.h>
 
-int read_pico_stream(int fd, std::string &read_chars);
+int read_pico_stream_to_file(int fd, std::ofstream &file);
 
 int set_raw_terminal(struct termios *old_attr, struct termios *new_attr,
                      int fd);

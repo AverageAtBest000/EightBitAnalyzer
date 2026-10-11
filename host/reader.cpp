@@ -1,23 +1,41 @@
 #include "reader.h"
+#include "shared.h"
+#include "writer.h"
 
-#include <cerrno>
+#include <fstream>
 #include <string>
 #include <unistd.h>
 
-int read_pico_stream(int fd, std::string &read_chars) {
+int read_pico_stream_to_file(int fd, std::ofstream &file) {
+
   char read_buffer[256];
+  int n = num_samples;
 
-  ssize_t num_chars = read(fd, read_buffer, sizeof(read_buffer));
-  while (num_chars == -1 && errno == EINTR) {
-    num_chars = read(fd, read_buffer, sizeof(read_buffer));
+  std::string read_chars;
+  std::string to_write;
+
+  while (n > 0) {
+    int num_chars = read(fd, read_buffer, sizeof(read_buffer));
+    if (num_chars == 0)
+      continue;
+    if (num_chars == -1)
+      return -1;
+
+    read_chars.append(read_buffer, num_chars);
+
+    auto newline_pos = read_chars.find('\n');
+
+    while (n > 0 && newline_pos != std::string::npos) {
+      to_write.append(read_chars.substr(0, newline_pos + 1));
+      read_chars.erase(0, newline_pos + 1);
+      n--;
+      newline_pos = read_chars.find('\n');
+    }
   }
 
-  if (num_chars <= 0) {
-    return num_chars;
-  }
+  write_to_file(file, to_write);
 
-  read_chars.append(read_buffer, num_chars);
-  return num_chars;
+  return 0;
 }
 
 /*
