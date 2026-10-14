@@ -21,7 +21,7 @@ int main() {
 
   const uint LED_PIN = 25;
 
-  const uint READ_PIN = 2;
+  const uint PIN1 = 2;
   const uint PIN2 = 0;
   const uint PIN3 = 0;
   const uint PIN4 = 0;
@@ -33,7 +33,7 @@ int main() {
   const uint TEST_PIN = 3;
 
   startPin(LED_PIN, GPIO_OUT);
-  startPin(READ_PIN, GPIO_IN);
+  startPin(PIN1, GPIO_IN);
   startPin(PIN2, GPIO_IN);
   startPin(PIN3, GPIO_IN);
   startPin(PIN4, GPIO_IN);
@@ -43,7 +43,7 @@ int main() {
   startPin(PIN8, GPIO_IN);
   startPin(TEST_PIN, GPIO_OUT);
 
-  gpio_pull_down(READ_PIN);
+  gpio_pull_down(PIN1);
   gpio_pull_down(PIN2);
   gpio_pull_down(PIN3);
   gpio_pull_down(PIN4);
