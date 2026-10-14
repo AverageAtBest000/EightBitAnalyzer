@@ -101,6 +101,8 @@ int main() {
     }
     for (int i = 0; i < sample_cap; i++)
       std::cout << sample_times[i] << ',' << std::bitset<8>(samples[i]) << '\n';
+
+    std::cout.flush();
   }
 
   return 0;
