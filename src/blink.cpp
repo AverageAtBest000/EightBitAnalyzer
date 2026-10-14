@@ -34,6 +34,13 @@ int main() {
 
   startPin(LED_PIN, GPIO_OUT);
   startPin(READ_PIN, GPIO_IN);
+  startPin(PIN2, GPIO_IN);
+  startPin(PIN3, GPIO_IN);
+  startPin(PIN4, GPIO_IN);
+  startPin(PIN5, GPIO_IN);
+  startPin(PIN6, GPIO_IN);
+  startPin(PIN7, GPIO_IN);
+  startPin(PIN8, GPIO_IN);
   startPin(TEST_PIN, GPIO_OUT);
 
   gpio_pull_down(READ_PIN);
