@@ -69,8 +69,16 @@ int main() {
     while (sample_count < sample_cap) {
       sleep_until(next_sample);
       sample_times[sample_count] = time_us_64() - start_time;
-      int read_pin_state = gpio_get(READ_PIN);
-      gpio_put(LED_PIN, read_pin_state);
+
+      uint8_t pin1_state = gpio_get(PIN1);
+      uint8_t pin2_state = gpio_get(PIN2);
+      uint8_t pin3_state = gpio_get(PIN3);
+      uint8_t pin4_state = gpio_get(PIN4);
+      uint8_t pin5_state = gpio_get(PIN5);
+      uint8_t pin6_state = gpio_get(PIN6);
+      uint8_t pin7_state = gpio_get(PIN7);
+
+      gpio_put(LED_PIN, pin1_state);
 
       if (i == 10) {
         i = 0;
@@ -79,7 +87,7 @@ int main() {
       }
       i++;
 
-      samples[sample_count] = read_pin_state;
+      samples[sample_count] = pin1_state;
 
       sample_count++;
       next_sample = delayed_by_ms(next_sample, 50);
