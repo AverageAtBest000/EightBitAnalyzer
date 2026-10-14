@@ -3,16 +3,18 @@
 #include <cstdint>
 #include <hardware/gpio.h>
 #include <hardware/timer.h>
+#include <initializer_list>
 #include <pico/time.h>
 #include <pico/types.h>
 #include <stdio.h>
 #include <sys/_intsup.h>
 
+int sum(std::initializer_list<uint8_t> list);
 void startPin(const uint PIN, bool isOut);
 
 int main() {
   const int sample_cap = num_samples;
-  int samples[sample_cap];
+  uint8_t samples[sample_cap];
   uint64_t sample_times[sample_cap];
 
   stdio_init_all();
@@ -71,12 +73,13 @@ int main() {
       sample_times[sample_count] = time_us_64() - start_time;
 
       uint8_t pin1_state = gpio_get(PIN1);
-      uint8_t pin2_state = gpio_get(PIN2);
-      uint8_t pin3_state = gpio_get(PIN3);
-      uint8_t pin4_state = gpio_get(PIN4);
-      uint8_t pin5_state = gpio_get(PIN5);
-      uint8_t pin6_state = gpio_get(PIN6);
-      uint8_t pin7_state = gpio_get(PIN7);
+      uint8_t pin2_state = gpio_get(PIN2) * 2;
+      uint8_t pin3_state = gpio_get(PIN3) * 4;
+      uint8_t pin4_state = gpio_get(PIN4) * 8;
+      uint8_t pin5_state = gpio_get(PIN5) * 16;
+      uint8_t pin6_state = gpio_get(PIN6) * 32;
+      uint8_t pin7_state = gpio_get(PIN7) * 64;
+      uint8_t pin8_state = gpio_get(PIN8) * 128;
 
       gpio_put(LED_PIN, pin1_state);
 
@@ -87,7 +90,9 @@ int main() {
       }
       i++;
 
-      samples[sample_count] = pin1_state;
+      samples[sample_count] =
+          sum({pin1_state, pin2_state, pin3_state, pin4_state, pin5_state,
+               pin6_state, pin7_state, pin8_state});
 
       sample_count++;
       next_sample = delayed_by_ms(next_sample, 50);
@@ -97,6 +102,16 @@ int main() {
   }
 
   return 0;
+}
+
+int sum(std::initializer_list<uint8_t> list) {
+  uint8_t sum = 0;
+
+  for (auto i : list) {
+    sum += i;
+  }
+
+  return sum;
 }
 
 void startPin(const uint PIN, bool isOut) {
