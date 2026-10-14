@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <sys/_intsup.h>
 
+void startPin(const uint PIN, bool isOut);
+
 int main() {
   const int sample_cap = num_samples;
   int samples[sample_cap];
@@ -15,17 +17,24 @@ int main() {
 
   stdio_init_all();
 
+  std::uint8_t states(0);
+
   const uint LED_PIN = 25;
+
   const uint READ_PIN = 2;
+  const uint PIN2 = 0;
+  const uint PIN3 = 0;
+  const uint PIN4 = 0;
+  const uint PIN5 = 0;
+  const uint PIN6 = 0;
+  const uint PIN7 = 0;
+  const uint PIN8 = 0;
+
   const uint TEST_PIN = 3;
 
-  gpio_init(LED_PIN);
-  gpio_init(READ_PIN);
-  gpio_init(TEST_PIN);
-
-  gpio_set_dir(LED_PIN, GPIO_OUT);
-  gpio_set_dir(READ_PIN, GPIO_IN);
-  gpio_set_dir(TEST_PIN, GPIO_OUT);
+  startPin(LED_PIN, GPIO_OUT);
+  startPin(READ_PIN, GPIO_IN);
+  startPin(TEST_PIN, GPIO_OUT);
 
   gpio_pull_down(READ_PIN);
 
@@ -66,4 +75,9 @@ int main() {
   }
 
   return 0;
+}
+
+void startPin(const uint PIN, bool isOut) {
+  gpio_init(PIN);
+  gpio_set_dir(PIN, isOut);
 }
