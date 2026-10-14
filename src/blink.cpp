@@ -1,9 +1,11 @@
 #include "pico/stdlib.h"
 #include "shared.h"
+#include <bitset>
 #include <cstdint>
 #include <hardware/gpio.h>
 #include <hardware/timer.h>
 #include <initializer_list>
+#include <iostream>
 #include <pico/time.h>
 #include <pico/types.h>
 #include <stdio.h>
@@ -98,7 +100,7 @@ int main() {
       next_sample = delayed_by_ms(next_sample, 50);
     }
     for (int i = 0; i < sample_cap; i++)
-      printf("%llu,%d\n", (unsigned long long)sample_times[i], samples[i]);
+      std::cout << sample_times[i] << ',' << std::bitset<8>(samples[i]) << '\n';
   }
 
   return 0;
