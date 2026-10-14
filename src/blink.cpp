@@ -44,6 +44,13 @@ int main() {
   startPin(TEST_PIN, GPIO_OUT);
 
   gpio_pull_down(READ_PIN);
+  gpio_pull_down(PIN2);
+  gpio_pull_down(PIN3);
+  gpio_pull_down(PIN4);
+  gpio_pull_down(PIN5);
+  gpio_pull_down(PIN6);
+  gpio_pull_down(PIN7);
+  gpio_pull_down(PIN8);
 
   while (true) {
 
