@@ -1,0 +1,5 @@
+.program capture
+
+.wrap target
+  in pins, 8
+.wrap
