@@ -24,13 +24,13 @@ int main() {
   const uint LED_PIN = 25;
 
   const uint PIN1 = 2;
-  const uint PIN2 = 0;
-  const uint PIN3 = 0;
-  const uint PIN4 = 0;
-  const uint PIN5 = 0;
-  const uint PIN6 = 0;
-  const uint PIN7 = 0;
-  const uint PIN8 = 0;
+  const uint PIN2 = 3;
+  const uint PIN3 = 4;
+  const uint PIN4 = 5;
+  const uint PIN5 = 6;
+  const uint PIN6 = 7;
+  const uint PIN7 = 8;
+  const uint PIN8 = 9;
 
   startPin(LED_PIN, GPIO_OUT);
   startPin(PIN1, GPIO_IN);
