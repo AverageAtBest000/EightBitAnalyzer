@@ -42,15 +42,6 @@ int main() {
   startPin(PIN7, GPIO_IN);
   startPin(PIN8, GPIO_IN);
 
-  gpio_pull_down(PIN1);
-  gpio_pull_down(PIN2);
-  gpio_pull_down(PIN3);
-  gpio_pull_down(PIN4);
-  gpio_pull_down(PIN5);
-  gpio_pull_down(PIN6);
-  gpio_pull_down(PIN7);
-  gpio_pull_down(PIN8);
-
   while (true) {
 
     int ch = getchar();
@@ -91,4 +82,7 @@ int main() {
 void startPin(const uint PIN, bool isOut) {
   gpio_init(PIN);
   gpio_set_dir(PIN, isOut);
+
+  if (!isOut)
+    gpio_pull_down(PIN);
 }
