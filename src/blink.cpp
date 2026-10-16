@@ -32,7 +32,6 @@ int main() {
   const uint PIN7 = 8;
   const uint PIN8 = 9;
 
-  startPin(LED_PIN, GPIO_OUT);
   startPin(PIN1, GPIO_IN);
   startPin(PIN2, GPIO_IN);
   startPin(PIN3, GPIO_IN);
